@@ -30,7 +30,7 @@ Hago estas anotaciones para recordar algunas tecnicas y conceptos importantes de
 -  `[1, 3, 5, 7].filter(it < 5)` crea un array con los elementos que cumplan con el filtro.
 -  `['Juan', 'Alberto', 'Carlos'].map('Señor $it')` mapea el array anteponiendo `Señor` en cada elemento.
 -  El siguiente ejemplo muestra el método `map()` que recibe una función anónima:
-```JavaScript
+```v
     names := ['Juan', 'Alberto', 'Carlos']
     result := names.map(fn(s string) {
             if s.contains('o') {
