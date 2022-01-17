@@ -40,3 +40,54 @@ Hago estas anotaciones para recordar algunas tecnicas y conceptos importantes de
             }
         })
 ``` 
+
+## Propiedades y métodos de los Diccionarios
+- `mut books := map[string]int{}` crea un diccionario explícito de tipo `string:int` vacío.
+- `mut books := {'book1': 10, 'book2': 20}` versión resumida para crear un diccionario `string:int`.
+- `books.len` devuelve la cantidad de elementos presentes en el diccionario.
+- `books['no existe']` las claves inexistentes devuelven cero `0`.
+- `books.delete('book1')` borra el elemento del diccionario dada su clave.
+
+## Pattern matching con `match`
+
+```v
+age := 18
+match age {
+    1...18 { 'Eres un chaval!' }
+    19...35 { 'Eres un adulto joven' }
+    36...65 { 'Eres un adulto' } 
+    66...95 { 'Eres un anciano' }
+    else { 'Eres un alienigena' }
+}
+println(age)
+```
+
+## Ejemplos con `for loop`
+
+```v
+frutas := ['manzanas', 'mangos', 'peras', 'piñas']
+// loop con índice y valor
+for i, v in frutas {
+    println('frutas[$i] = $v')
+}
+
+// loop solo con valor
+for v in frutas {
+    println('me gusta comer: $v')
+}
+
+// loop al estilo C
+for i := 0; i < frutas.len; i++ {
+    println('no me gusta comer: $frutas[i]')
+}
+
+// loop en un rango
+for i in 10..20 {
+    println(i)
+}
+
+// loop infinito
+for {
+    println('me imprimo para siempre...!!!')
+}
+```
