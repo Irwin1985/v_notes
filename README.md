@@ -91,3 +91,38 @@ for {
     println('me imprimo para siempre...!!!')
 }
 ```
+## Funciones de alto orden
+Son las funciones que se reciben como parámetro y se retornan desde otras funciones.
+
+```v
+fn temprano() string {
+	return 'Buenos días'
+}
+
+fn tarde() string {
+	return 'Buenas tardes'
+}
+
+fn noche() string {
+	return 'Buenas noches'
+}
+
+fn saludar(func fn() string, name string) string {
+	return '$func() $name'
+}
+
+fn main() {
+	println(saludar(temprano, 'Irwin'))
+	println(saludar(tarde, 'Irwin'))
+	println(saludar(noche, 'Irwin'))
+}
+```
+
+## Funciones anónimas
+Son funciones que no tienen un identificador y se pueden usar en cualquier contexto. Ejemplo:
+
+```v
+    println(saludar(fn() string {
+        return 'Buenas anonimas, '
+    }, 'Irwin'))
+```
