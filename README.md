@@ -197,64 +197,64 @@ Una función puede ejecutar código diferido, esto quiere decir que cuando el cu
 La condición es que las funciones que formarán parte de los elementos del array o mapa, tienen que coincidir con la misma firma.
 
 ```v
-	module main
+module main
 
-	fn add(x int, y int) int {
-		return x + y
-	}
+fn add(x int, y int) int {
+	return x + y
+}
 
-	fn sub(x int, y int) int {
-		return x - y
-	}
+fn sub(x int, y int) int {
+	return x - y
+}
 
-	fn mul(x int, y int) int {
-		return x * y
-	}
+fn mul(x int, y int) int {
+	return x * y
+}
 
-	fn div(x int, y int) int {
-		return x / y
-	}
+fn div(x int, y int) int {
+	return x / y
+}
 
-	fn main() {
-		math := [add, sub, mul, div]
-		x, y := 10, 2
-		for f in math {
-			println(f(x, y))
-		}
+fn main() {
+	math := [add, sub, mul, div]
+	x, y := 10, 2
+	for f in math {
+		println(f(x, y))
 	}
+}
 ```
 
 El mismo ejemplo con un diccionario:
 
 ```v
-	module main
+module main
 
-	fn add(x int, y int) int {
-		return x + y
-	}
+fn add(x int, y int) int {
+	return x + y
+}
 
-	fn sub(x int, y int) int {
-		return x - y
-	}
+fn sub(x int, y int) int {
+	return x - y
+}
 
-	fn mul(x int, y int) int {
-		return x * y
-	}
+fn mul(x int, y int) int {
+	return x * y
+}
 
-	fn div(x int, y int) int {
-		return x / y
-	}
+fn div(x int, y int) int {
+	return x / y
+}
 
-	fn main() {
-    	math := {
-    		'suma': add
-    		'resta': sub
-    		'multiplicacion': mul
-    		'division': div
-    	}
-    	x, y := 10, 2
-    	for k, v in math {
-    		println("la $k de ($x, $y) es: ${v(x, y)}")
-    	}
-	}
+fn main() {
+math := {
+	'suma': add
+	'resta': sub
+	'multiplicacion': mul
+	'division': div
+}
+x, y := 10, 2
+for k, v in math {
+	println("la $k de ($x, $y) es: ${v(x, y)}")
+}
+}
 ```
