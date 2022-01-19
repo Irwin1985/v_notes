@@ -31,14 +31,14 @@ Hago estas anotaciones para recordar algunas tecnicas y conceptos importantes de
 -  `['Juan', 'Alberto', 'Carlos'].map('Señor $it')` mapea el array anteponiendo `Señor` en cada elemento.
 -  El siguiente ejemplo muestra el método `map()` que recibe una función anónima:
 ```v
-    names := ['Juan', 'Alberto', 'Carlos']
-    result := names.map(fn(s string) {
-            if s.contains('o') {
-                return 1
-            } else {
-                return 0
-            }
-        })
+names := ['Juan', 'Alberto', 'Carlos']
+result := names.map(fn(s string) {
+  if s.contains('o') {
+    return 1
+  } else {
+    return 0
+  }
+})
 ``` 
 
 ## Propiedades y métodos de los Diccionarios
@@ -53,11 +53,11 @@ Hago estas anotaciones para recordar algunas tecnicas y conceptos importantes de
 ```v
 age := 18
 match age {
-    1...18 { 'Eres un chaval!' }
-    19...35 { 'Eres un adulto joven' }
-    36...65 { 'Eres un adulto' } 
-    66...95 { 'Eres un anciano' }
-    else { 'Eres un alienigena' }
+  1...18 { 'Eres un chaval!' }
+  19...35 { 'Eres un adulto joven' }
+  36...65 { 'Eres un adulto' } 
+  66...95 { 'Eres un anciano' }
+  else { 'Eres un alienigena' }
 }
 println(age)
 ```
@@ -68,27 +68,27 @@ println(age)
 frutas := ['manzanas', 'mangos', 'peras', 'piñas']
 // loop con índice y valor
 for i, v in frutas {
-    println('frutas[$i] = $v')
+  println('frutas[$i] = $v')
 }
 
 // loop solo con valor
 for v in frutas {
-    println('me gusta comer: $v')
+  println('me gusta comer: $v')
 }
 
 // loop al estilo C
 for i := 0; i < frutas.len; i++ {
-    println('no me gusta comer: $frutas[i]')
+  println('no me gusta comer: $frutas[i]')
 }
 
 // loop en un rango
 for i in 10..20 {
-    println(i)
+  println(i)
 }
 
 // loop infinito
 for {
-    println('me imprimo para siempre...!!!')
+  println('me imprimo para siempre...!!!')
 }
 ```
 ## Funciones de alto orden
@@ -96,25 +96,25 @@ Son las funciones que se reciben como parámetro y se retornan desde otras funci
 
 ```v
 fn temprano() string {
-	return 'Buenos días'
+  return 'Buenos días'
 }
 
 fn tarde() string {
-	return 'Buenas tardes'
+  return 'Buenas tardes'
 }
 
 fn noche() string {
-	return 'Buenas noches'
+  return 'Buenas noches'
 }
 
 fn saludar(func fn() string, name string) string {
-	return '$func() $name'
+  return '$func() $name'
 }
 
 fn main() {
-	println(saludar(temprano, 'Irwin'))
-	println(saludar(tarde, 'Irwin'))
-	println(saludar(noche, 'Irwin'))
+  println(saludar(temprano, 'Irwin'))
+  println(saludar(tarde, 'Irwin'))
+  println(saludar(noche, 'Irwin'))
 }
 ```
 
@@ -122,19 +122,20 @@ fn main() {
 Son funciones que no tienen un identificador y se pueden usar en cualquier contexto. Ejemplo:
 
 ```v
-    println(saludar(fn() string {
-        return 'Buenas anonimas, '
-    }, 'Irwin'))
+println(saludar(fn() string {
+  return 'Buenas anonimas, '
+  }, 'Irwin'))
 ```
 ## Funciones que retornan múltiples valores
 ```v
-    fn mayusculas(str string) (string, int) {
-        return str.to_upper(), str.len
-    }
-    fn main() {
-        str_may, str_size := mayusculas('irwin')
-        println("'$str_may' tiene $str_size de longitud.")
-    }
+fn mayusculas(str string) (string, int) {
+  return str.to_upper(), str.len
+}
+
+fn main() {
+  str_may, str_size := mayusculas('irwin')
+  println("'$str_may' tiene $str_size de longitud.")
+}
 ```
 
 ## Permitir variables globales
@@ -143,54 +144,56 @@ En `v` no se permiten las variables globales pero si quieres hacerlo entonces ti
 ## Funciones que retornan un option
 Esto es basicamente que una función puede retornar un valor o `none` que es un tipo especial que indica `ausencia de valor`. El llamador de este tipo de funciones siempre debe evaluar el resultado porque puede o no haber valor.
 ```v
-    fn adolescente(edad string) ?string {
-        if edad <= 0 {
-            return none
-        } else if edad >= 13 && edad <= 19 {
-            return 'es adolescente'
-        } else {
-            return 'no es adolescente'
-        }
-    }
-    fn main() {
-        result := adolescente(-3) or { 'edad inválida' }
-        println(result)
-    }
+fn adolescente(edad string) ?string {
+  if edad <= 0 {
+    return none
+  } else if edad >= 13 && edad <= 19 {
+    return 'es adolescente'
+  } else {
+    return 'no es adolescente'
+  }
+}
+
+fn main() {
+  result := adolescente(-3) or { 'edad inválida' }
+  println(result)
+}
 ```
 
 También se puede retornar un `error` en lugar de `none`:
 ```v
-    fn adolescente(edad string) ?string {
-        if edad <= 0 {
-            return error('edad inválida')
-        } else if edad >= 13 && edad <= 19 {
-            return 'es adolescente'
-        } else {
-            return 'no es adolescente'
-        }
-    }
-    fn main() {
-        result := adolescente(-3) or { err.msg } // err es una variable especial en caso de error.
-        println(result)
-    }
+fn adolescente(edad string) ?string {
+  if edad <= 0 {
+    return error('edad inválida')
+  } else if edad >= 13 && edad <= 19 {
+    return 'es adolescente'
+  } else {
+    return 'no es adolescente'
+  }
+}
+
+fn main() {
+  result := adolescente(-3) or { err.msg } // err es una variable especial en caso de error.
+  println(result)
+}
 ```
 
 ## Ejecución diferida dentro de una función
 Una función puede ejecutar código diferido, esto quiere decir que cuando el cuerpo de la funció se haya ejecutado, procederá a ejecutarse el bloque diferido.
 
 ```v
-    fn defer_test() {
-    	println('Hola')
-    	defer {
-    		println('Hola desde el bloque diferido :)')
-    	}
-    	println('Como estas?')
-    	println('bueno... chao!')
-    }
-    
-    fn main() {
-    	defer_test()
-    }
+fn defer_test() {
+  println('Hola')
+  defer {
+    println('Hola desde el bloque diferido :)')
+  }
+  println('Como estas?')
+  println('bueno... chao!')
+}
+
+fn main() {
+  defer_test()
+}
 ```
 
 ## Funciones como elementos de array o diccionario
@@ -200,27 +203,27 @@ La condición es que las funciones que formarán parte de los elementos del arra
 module main
 
 fn add(x int, y int) int {
-	return x + y
+  return x + y
 }
 
 fn sub(x int, y int) int {
-	return x - y
+  return x - y
 }
 
 fn mul(x int, y int) int {
-	return x * y
+  return x * y
 }
 
 fn div(x int, y int) int {
-	return x / y
+  return x / y
 }
 
 fn main() {
-	math := [add, sub, mul, div]
-	x, y := 10, 2
-	for f in math {
-		println(f(x, y))
-	}
+  math := [add, sub, mul, div]
+  x, y := 10, 2
+  for f in math {
+    println(f(x, y))
+  }
 }
 ```
 
@@ -230,31 +233,31 @@ El mismo ejemplo con un diccionario:
 module main
 
 fn add(x int, y int) int {
-	return x + y
+  return x + y
 }
 
 fn sub(x int, y int) int {
-	return x - y
+  return x - y
 }
 
 fn mul(x int, y int) int {
-	return x * y
+  return x * y
 }
 
 fn div(x int, y int) int {
-	return x / y
+  return x / y
 }
 
 fn main() {
-math := {
-	'suma': add
-	'resta': sub
-	'multiplicacion': mul
-	'division': div
-}
-x, y := 10, 2
-for k, v in math {
-	println("la $k de ($x, $y) es: ${v(x, y)}")
-}
+  math := {
+    'suma': add
+    'resta': sub
+    'multiplicacion': mul
+    'division': div
+  }
+  x, y := 10, 2
+  for k, v in math {
+    println("la $k de ($x, $y) es: ${v(x, y)}")
+  }
 }
 ```
