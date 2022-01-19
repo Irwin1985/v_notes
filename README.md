@@ -126,3 +126,135 @@ Son funciones que no tienen un identificador y se pueden usar en cualquier conte
         return 'Buenas anonimas, '
     }, 'Irwin'))
 ```
+## Funciones que retornan múltiples valores
+```v
+    fn mayusculas(str string) (string, int) {
+        return str.to_upper(), str.len
+    }
+    fn main() {
+        str_may, str_size := mayusculas('irwin')
+        println("'$str_may' tiene $str_size de longitud.")
+    }
+```
+
+## Permitir variables globales
+En `v` no se permiten las variables globales pero si quieres hacerlo entonces tienes que compilar o ejecutar el script de la siguiente manera: `v -enable-globals run main.v`
+
+## Funciones que retornan un option
+Esto es basicamente que una función puede retornar un valor o `none` que es un tipo especial que indica `ausencia de valor`. El llamador de este tipo de funciones siempre debe evaluar el resultado porque puede o no haber valor.
+```v
+    fn adolescente(edad string) ?string {
+        if edad <= 0 {
+            return none
+        } else if edad >= 13 && edad <= 19 {
+            return 'es adolescente'
+        } else {
+            return 'no es adolescente'
+        }
+    }
+    fn main() {
+        result := adolescente(-3) or { 'edad inválida' }
+        println(result)
+    }
+```
+
+También se puede retornar un `error` en lugar de `none`:
+```v
+    fn adolescente(edad string) ?string {
+        if edad <= 0 {
+            return error('edad inválida')
+        } else if edad >= 13 && edad <= 19 {
+            return 'es adolescente'
+        } else {
+            return 'no es adolescente'
+        }
+    }
+    fn main() {
+        result := adolescente(-3) or { err.msg } // err es una variable especial en caso de error.
+        println(result)
+    }
+```
+
+## Ejecución diferida dentro de una función
+Una función puede ejecutar código diferido, esto quiere decir que cuando el cuerpo de la funció se haya ejecutado, procederá a ejecutarse el bloque diferido.
+
+```v
+    fn defer_test() {
+    	println('Hola')
+    	defer {
+    		println('Hola desde el bloque diferido :)')
+    	}
+    	println('Como estas?')
+    	println('bueno... chao!')
+    }
+    
+    fn main() {
+    	defer_test()
+    }
+```
+
+## Funciones como elementos de array o diccionario
+La condición es que las funciones que formarán parte de los elementos del array o mapa, tienen que coincidir con la misma firma.
+
+```v
+	module main
+
+	fn add(x int, y int) int {
+		return x + y
+	}
+
+	fn sub(x int, y int) int {
+		return x - y
+	}
+
+	fn mul(x int, y int) int {
+		return x * y
+	}
+
+	fn div(x int, y int) int {
+		return x / y
+	}
+
+	fn main() {
+		math := [add, sub, mul, div]
+		x, y := 10, 2
+		for f in math {
+			println(f(x, y))
+		}
+	}
+```
+
+El mismo ejemplo con un diccionario:
+
+```v
+	module main
+
+	fn add(x int, y int) int {
+		return x + y
+	}
+
+	fn sub(x int, y int) int {
+		return x - y
+	}
+
+	fn mul(x int, y int) int {
+		return x * y
+	}
+
+	fn div(x int, y int) int {
+		return x / y
+	}
+
+	fn main() {
+    	math := {
+    		'suma': add
+    		'resta': sub
+    		'multiplicacion': mul
+    		'division': div
+    	}
+    	x, y := 10, 2
+    	for k, v in math {
+    		println("la $k de ($x, $y) es: ${v(x, y)}")
+    	}
+	}
+```
