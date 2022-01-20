@@ -287,7 +287,7 @@ subprocesos, cada uno de ellos ejecutándose en un subproceso diferente.
 - **Hilo:** un hilo permite que una o más tareas se ejecuten en orden secuencial.
 - **Tarea:** una tarea es una unidad de trabajo que se ejecuta en un subproceso. Se puede representar como una función en V.
 
-## El módulo time
+## El módulo time para pausar el proceso actual
 ```v
 import time
 
@@ -298,3 +298,31 @@ fn main() {
 }
 ```
 
+## El módulo time para mostrar el tiempo transcurrido en un proceso
+```v
+import time
+
+fn main() {
+  sw := time.new_stopwatch()
+  for i in 1..101 {
+    println('$i')
+  }
+  println('Tiempo transcurrido: ${sw.elapsed().seconds()}')
+}
+```
+
+## Ejecutando tarea asíncrona
+```v
+fn contar_hasta(tope int) {
+  for i in 1..tope {
+    // nada, solo contar...
+  }
+}
+
+fn main() {
+  println('Antes...')
+  thread := go contar_hasta(1000000000)
+  thread.wait() // espera a que termine
+  println('Después...')
+}
+```
