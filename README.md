@@ -272,8 +272,29 @@ Initialising ...
 Complete!
 ```
 Lo anterior crea una carpeta llamada `my_project` con los siguientes ficheros:
-1. **.gitignore**
-2. **my_project.v** el punto de entrada para la aplicación que vamos a crear. El módulo tiene que ser `main` y lleva la función `main`.
-3. **v.mod** contiene la información del modulo creado.
+1. **.gitignore:**
+2. **my_project.v:** el punto de entrada para la aplicación que vamos a crear. El módulo tiene que ser `main` y lleva la función `main`.
+3. **v.mod:** contiene la información del modulo creado.
 
+## Concurrencia y Paralelismo
+- **Concurrencia:** una o más tareas ejecutandose al mismo tiempo.
+- **Paralelismo:** varias tareas ejecutandose para resolver un problema en común.
+
+## Terminología
+- **Programa:** Un programa es un conjunto de instrucciones en forma de funciones y sentencias que nos ayudan a lograr un trabajo en particular.
+- **Proceso:** Un programa con una o más funciones y sentencias, cuando comienza a ejecutarse, se asocia con el proceso. Un proceso puede tener uno o más
+subprocesos, cada uno de ellos ejecutándose en un subproceso diferente.
+- **Hilo:** un hilo permite que una o más tareas se ejecuten en orden secuencial.
+- **Tarea:** una tarea es una unidad de trabajo que se ejecuta en un subproceso. Se puede representar como una función en V.
+
+## El módulo time
+```v
+import time
+
+fn main() {
+  println("Antes...")
+  time.sleep(i64(500) * time.millisecond)
+  println("Después...")
+}
+```
 
