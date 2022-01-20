@@ -359,3 +359,50 @@ fn main() {
   println('he salido del trabajo y vuelto a casa es ${sw.elapsed().seconds()} segundos')
 }
 ```
+
+## Array de thread con funciones que retornan un valor
+
+El resultado es un array del tipo en común que retornan las funciones.
+
+## Array de hilos (thread)
+```v
+import time
+fn retirar_dinero() string {
+  println('retirando dinero...')
+  time.sleep(i64(5) * time.second)
+  println('dinero retirado...')
+  return 'Dinero retirado'
+}
+
+fn tomar_metro() string {
+  println('tomando el metro...')
+  time.sleep(i64(3) * time.second)
+  println('montado en el metro..')
+  return 'Subido en el metro'
+}
+
+fn salir_del_trabajo() string {
+   println('saliendo del trabajo')
+   time.sleep(i64(4) * time.second)
+   println('fuera del trabajo...')
+   return 'fuera del trabajo'
+}
+
+fn main() {
+  sw := time.new_stopwatch() // para medir el tiempo total
+  
+  mut t := []thread string{}
+  t << go salir_del_trabajo()
+  t << go retirar_dinero()
+  t << go tomar_metro()
+  
+  result := t.wait() // esperar que la tarea más larga termine
+  
+  // result es de tipo []string
+  println('he salido del trabajo y vuelto a casa es ${sw.elapsed().seconds()} segundos')
+  
+  for r in result {
+    println(r) // es un string por cada función
+  }
+}
+```
