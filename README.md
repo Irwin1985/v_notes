@@ -406,3 +406,17 @@ fn main() {
   }
 }
 ```
+
+## Concurrencia con funciones anónimas
+
+La gramática es 'go' function_declaration '()': es decir, primero colocamos la palabra reservada `go` seguido de la definición de la función anónima y finalmente los paréntesis para invocar a la función debido a `go`.
+
+```v
+fn main() {
+  t := go fn() string {
+         return 'Hola anónimo!'
+       }()
+  res := t.wait()
+  println(res)
+}
+```
