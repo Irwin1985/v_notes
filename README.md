@@ -261,3 +261,19 @@ fn main() {
   }
 }
 ```
+
+## Crear un proyecto en V por consola
+```v
+v new my_project
+Input your project description: Descripción de tu proyecto. Lo demás lo puedes dejar por defecto si quieres.
+Input your project version: (0.0.0) 
+Input your project license: (MIT) 
+Initialising ...
+Complete!
+```
+Lo anterior crea una carpeta llamada `my_project` con los siguientes ficheros:
+1. **.gitignore**
+2. **my_project.v** el punto de entrada para la aplicación que vamos a crear. El módulo tiene que ser `main` y lleva la función `main`.
+3. **v.mod** contiene la información del modulo creado.
+
+
