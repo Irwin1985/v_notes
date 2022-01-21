@@ -420,3 +420,20 @@ fn main() {
   println(res)
 }
 ```
+
+## Test unitarios
+Las pruebas rápidas se pueden hacer con `assert <Expr>` pero una suite completa sería:
+
+```v
+fn testsuite_begin() {
+  println('antes de ejecutar los tests!')
+}
+
+fn test_something() {
+  assert 2 == 2
+}
+
+fn testsuite_end() {
+  println('después de ejecutar los tests!')
+}
+```
