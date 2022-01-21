@@ -451,5 +451,115 @@ struct Person {
 fn main() {
   p := json.decode('{"name": "John", "age": 36}') or { panic('invalid JSON data') }
   println(typeof(p).name) // Person
+  
+  // para decodificar el objeto V a JSON Data
+  println(json.encode(p))
+}
+```
+
+## Builtin ORM
+V viene con un ORM incluído para facilitar el tratamiento y manipulación de datos persistentes.
+```v
+import sqlite
+[table: 'Notes']
+struct Note {
+	id int [primary; sql: serial]
+	message string [sql: 'detail'; unique]
+	status bool [nonull]
+}
+
+fn main() {
+	db := sqlite.connect('NotesDB.db') or { panic(err) }
+	//db.exec('drop table if exists Notes')
+	sql db {
+		drop table Note
+	}
+	sql db {
+		create table Note
+	}
+	// insertar registros
+	n1 := Note {
+		message: 'Get some milk'
+		status: false
+	}
+
+	n2 := Note {
+		message: 'Get groceries'
+		status: false
+	}
+
+	sql db {
+		insert n1 into Note
+		insert n2 into Note
+	}
+  
+	//println(db.last_id() as int)
+  
+  // Seleccionar registros
+	all_notes := sql db {
+		select from Note order by id desc
+	}
+	println(all_notes)
+	println('El tipo de all_notes es: ${typeof(all_notes).name}')
+
+	// traer el último registro
+	notes_limited := sql db {
+		select from Note order by id desc limit 1
+	}
+	println(notes_limited)
+
+	// seleccionar los registros mayores que 1
+	notes_latest := sql db {
+		select from Note where id > 1
+	}
+	println(notes_latest)
+
+	// actualizar el status a true de la nota 2
+	sql db {
+		update Note set status = true where id == 2
+	}
+  
+	// consultar para ver el resultado
+	nota2 := sql db {
+		select from Note where id == 2
+	}
+	println(nota2)
+
+	// insertar otra nota de prueba
+	n3 := Note {
+		message: 'Lista para eliminar'
+		status: true
+	}
+
+	sql db {
+		insert n3 into Note
+	}
+
+	// consultamos nota 3
+
+	nota3 := sql db {
+		select from Note where id == 3
+	}
+
+	println(nota3)
+
+	// eliminamos nota3
+	sql db {
+		delete from Note where id == 3
+	}
+
+	// consultamos todo
+	todos := sql db {
+		select from Note order by id desc
+	}
+
+	println(todos)
+
+	// seleccionar uno inexistente
+	no_existe := sql db {
+		select from Note where id == 10
+	}
+
+	println(no_existe)
 }
 ```
