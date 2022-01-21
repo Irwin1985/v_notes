@@ -437,3 +437,19 @@ fn testsuite_end() {
   println('después de ejecutar los tests!')
 }
 ```
+
+## Builtin Json
+V trae incluído la librería para trabajar con `json`
+
+```v
+import json
+struct Person {
+  name string
+  age int
+}
+
+fn main() {
+  p := json.decode('{"name": "John", "age": 36}') or { panic('invalid JSON data') }
+  println(typeof(p).name) // Person
+}
+```
